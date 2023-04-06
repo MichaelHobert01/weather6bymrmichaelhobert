@@ -1,0 +1,16 @@
+header {
+    background-image: linear-gradient(to right, blue, purple); 
+}
+
+#whatSiteIsIt {
+    font-family: monospace;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 50%;
+    color: white;
+}
+
+#search {
+    display: flex;
+    justify-content: flex-start;
+}
