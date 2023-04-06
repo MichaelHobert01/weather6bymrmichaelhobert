@@ -10,7 +10,32 @@ header {
     color: white;
 }
 
+#search input[type="text"] {
+    width: 200px;
+    height: 10px;
+    padding: 5px; 
+}
+
+#search input[type="button"] {
+    width: 75px; 
+    height: 23px; 
+    margin-left: 65px;
+    margin-top: 10px;
+    color: white;
+    font-family: monospace;
+}
+
 #search {
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
+}
+
+h1 {
+    font-family: monospace; 
+}
+
+#go-search {
+    background-image: linear-gradient(to right, purple, blue);
+    width: 10px;
 }
