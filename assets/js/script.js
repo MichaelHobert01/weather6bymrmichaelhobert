@@ -1,28 +1,33 @@
-var search = document.getElementById('search');
-var entered = document.querySelector('input[type="text"}');
-var forecastDiv = document.getElementById('results');
-
-search.addEventListener('submit', event => {
-    event.preventDefault();
-    var city = entered.value; 
-    if (!city) return;
-
-var weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid={API key}`; 
-
-const processWeatherData = (weatherURL) => {
-    fetch(weatherURL) 
-        .then(response => response.json())
-        .then(data => {
-            var forecast = data.list[0];
-            var date = new Date(forecast.dt * 1000);
-            var temp = forecast.main.temp;
-            var description = forecast.weather[0].description;
-
-
-            displayWeatherData(date, temp, description);
-
-        })
-        .catch(error => {
-            console.error('Error fetching weather data:, error');
-        });
+let weather = {
+    apiKey: "6f87ef5a2ecfc1f2e49e75dca5a018d9",
+    fetchWeather: function (city) {
+        fetch(
+            "https://api.openweathermap.org/data/2.5/weather?q="
+            + city
+            + "&units=metric&appid="
+            + this.apiKey
+        )
+            .then((response) => response.json())
+            .then((data) => this.displayWeather(data));
+    },
+    displayWeather: function (data) {
+        const { name } = data; 
+        const { icon, description } = data.weather[0]; 
+        const { temp, humidity } = data.main; 
+        const { speed } = data.wind; 
+        console.log(name,icon,description,temp,humidity,speed);
+        document.querySelector(".city").innerText = "Weather in " + name;
+        document.querySelector(".icon").src = "https://openweathermap.org/img/wn/"+ icon +".png"
+        document.querySelector(".description").innerText = description;
+        document.querySelector(".temp").innerText = temp + "C";
+        document.querySelector(".humidity").innerText = "Humidity:" +humidity + "%";
+        document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
+    },
+    search: function() {
+        this.fetchWeather(document.querySelector(".search-bar").value);
+    }    
 };
+
+document.querySelector(".search-button").addEventListener("click", function () {
+    weather.search(); 
+});
