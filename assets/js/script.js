@@ -8,7 +8,10 @@ let weather = {
             + this.apiKey
         )
             .then((response) => response.json())
-            .then((data) => this.displayWeather(data));
+            .then((data) => {
+                this.displayWeather(data)
+                this.display5(data);
+            });
     },
     displayWeather: function (data) {
         const { name } = data; 
@@ -22,6 +25,15 @@ let weather = {
         document.querySelector(".temp").innerText = temp + "C";
         document.querySelector(".humidity").innerText = "Humidity:" +humidity + "%";
         document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
+    }, 
+    display5: function (data) {
+        const forecastData = data.list.slice(0, 5);
+        forecastData.forEach(forecast => {
+            const forecastDateTime = new Date(forecast.dt_txt);
+            document.querySelector(".dayName").innerText = forecastDateTime.toLocaleDateString();
+            document.querySelector(".tempDay").innerText = forecastDateTime.toLocaleDateString();
+
+        })
     },
     search: function() {
         this.fetchWeather(document.querySelector(".search-bar").value);
@@ -30,4 +42,11 @@ let weather = {
 
 document.querySelector(".search-button").addEventListener("click", function () {
     weather.search(); 
+    
+});
+
+document.querySelector(".search-bar").addEventListener("keyup", function (event) {
+    if (event.key == "Enter") {
+        weather.search(); 
+    }
 });

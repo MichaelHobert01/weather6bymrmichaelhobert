@@ -4,6 +4,8 @@ nav {
     background-image: linear-gradient(to right, blue, purple);
     display: flex;
     justify-content: center;
+    color: white;
+    padding-left: 100px;
 }
 
 .description {

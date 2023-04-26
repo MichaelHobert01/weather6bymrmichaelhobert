@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js" defer></script>
 </head>
 
 <body>
@@ -25,8 +25,8 @@
         </div>
 
         <div class="weather">
-            <h2 class="city"> Weather in Charlotte</h2>
-             <div class="temp">56</div>
+            <h2 class="city">  </h2>
+             <div class="temp"></div>
              <img src="" alt="" class="icon" />
              <div class="description"></div>
              <div class="humidity"></div>
@@ -35,7 +35,10 @@
 
         <div class="history"></div>
     
-        <div class="5dayforecast"></div>
+        <div class="5dayforecast"> <h5>5-Day Forecast</h5>
+            <div class="dayname"></div>
+            <div class="tempDay"></div>
+    </div>
     </div>
    
 </body>
