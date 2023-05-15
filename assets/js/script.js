@@ -1,4 +1,5 @@
 let weather = {
+    daysArray : [],
     apiKey: "6f87ef5a2ecfc1f2e49e75dca5a018d9",
     fetchWeather: function (city) {
         fetch(
@@ -9,8 +10,7 @@ let weather = {
         )
             .then((response) => response.json())
             .then((data) => {
-                this.displayWeather(data)
-                this.display5(data);
+                this.displayWeather(data);
             });
     },
     displayWeather: function (data) {
@@ -26,19 +26,30 @@ let weather = {
         document.querySelector(".humidity").innerText = "Humidity:" +humidity + "%";
         document.querySelector(".wind").innerText = "Wind speed: " + speed + " km/h";
     }, 
-    display5: function (data) {
-        const forecastData = data.list.slice(0, 5);
-        forecastData.forEach(forecast => {
-            const forecastDateTime = new Date(forecast.dt_txt);
-            document.querySelector(".dayName").innerText = forecastDateTime.toLocaleDateString();
-            document.querySelector(".tempDay").innerText = forecastDateTime.toLocaleDateString();
+    fetchWeatherFive: function (city) {
+        fetch(
+            "https://api.openweathermap.org/data/2.5/forecast?q="
+            + city
+            + "&units=metric&appid="
+            + this.apiKey
+        ) 
+            .then((response) => response.json())
+            .then((data) => {
+                this.weatherFive(data); 
+            });
+    },
+    weatherFive: function (data) {
+        const { name } = data;
+        const { temp, humidity } = data.main;
 
-        })
     },
     search: function() {
         this.fetchWeather(document.querySelector(".search-bar").value);
-    }    
+    },
+
 };
+
+
 
 document.querySelector(".search-button").addEventListener("click", function () {
     weather.search(); 
@@ -50,3 +61,23 @@ document.querySelector(".search-bar").addEventListener("keyup", function (event)
         weather.search(); 
     }
 });
+
+
+
+function loadSearchHistory() {
+    const userHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+    userHistory.forEach((data) => {
+        addToSearchHistory(data); 
+    }); 
+}
+
+function saveSearchHistory(cityName) {
+    const userHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+    if(!userHistory.includes(cityName)) {
+        userHistory.push(cityName);
+        localStorage.setItem('searchHistory', JSON.stringify(userHistory));
+        loadSearchHistory();
+    }
+}
