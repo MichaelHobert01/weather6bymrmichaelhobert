@@ -96,3 +96,18 @@ let weather = {
   // Load search history on page load
   weather.loadSearchHistory();
   
+  // Display search history on page
+  const searchHistoryList = document.querySelector(".search-history");
+  const userHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+  
+  userHistory.forEach((city) => {
+    const listItem = document.createElement("li");
+    listItem.innerText = city;
+  
+    // Add event listener to trigger new search when clicking a search history item
+    listItem.addEventListener("click", () => {
+      weather.fetchWeather(city);
+    });
+  
+    searchHistoryList.appendChild(listItem);
+  });
